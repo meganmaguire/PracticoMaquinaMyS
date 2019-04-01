@@ -18,7 +18,8 @@ public class Principal {
 		// Inserta el evento de Fin de Simulación
 		actual = new EventoFinSimulacion(tiempoFinSimulacion);
 		fel.insertarFel(actual);
-
+		// Setea en 0 porque el Fin de Simulación contó un item que no existe
+        Item.setCantidadItems(0);
 		// Inserta el primer arribo
 		actual = new EventoArribo(tiempoSimulacion);
 		fel.insertarFel(actual);
@@ -29,17 +30,6 @@ public class Principal {
 			actual = fel.suprimirFel();
 			actual.planificarEvento(servidor,queue);
 
-
-			//para mostrar
-			/*
-			System.out.println("########################\n\n" +
-								"Iteración " +i+"\n" +
-								"Tiempo:"+tiempoSimulacion+"\n" +
-								"Evento: "+actual+"\n" +
-								"Fel:\n" + fel.getLista() +"\n" +
-								"Cola: "+queue.HayCola()+"\n\n");
-			i++;
-			*/
 			// Si llega el Evento de Fin de Simulación termina
 			if(actual instanceof EventoFinSimulacion)
 				finSimulacion = true;

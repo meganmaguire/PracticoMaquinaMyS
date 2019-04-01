@@ -26,6 +26,7 @@ public class EventoSalida extends Evento {
             servidor.setEstado(false);
             servidor.setTiempoInicioOcio(getTiempo());
         }
+        // Agrega al contador el total de arribo del item
         Item.setTiempoTransito(this.getTiempo(),this.getItem().getTiempoArribo());
     }
 }
