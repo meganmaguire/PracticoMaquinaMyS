@@ -4,27 +4,28 @@ public class EventoSalida extends Evento {
 	    super(1,tiempo,item);
    }
         
-    public void planificarEvento(Servidor servidor,Queue queue) {
+    public void planificarEvento(Servidor[] servidor,Queue[] queue) {
 	            
         Evento e;
-        Item i;
+        Item item;
         Fel fel = Fel.getFel();
+        int i = this.getItem().getNroServidor();
 
         // Si hay cola
-        if(queue.HayCola()){
+        if(queue[i].HayCola()){
 
-            i = queue.suprimirCola();
-            Item.setTiempoEsperaCola(this.getTiempo(),i.getTiempoDuracionServicio(),i.getTiempoArribo());
+            item = queue[i].suprimirCola();
+            Item.setTiempoEsperaCola(this.getTiempo(),item.getTiempoDuracionServicio(),item.getTiempoArribo());
             // Genera el próximo evento de salida con el siguiente item de la cola
             int salida = GeneradorTiempos.getTiempoDuracionServicio();
-            i.setTiempoDuracionServicio(salida);
-            e = new EventoSalida(this.getTiempo() + salida, i );
+            item.setTiempoDuracionServicio(salida);
+            e = new EventoSalida(this.getTiempo() + salida, item );
             fel.insertarFel(e);
         }
         else{
             // Marca el servidor como desocupado
-            servidor.setEstado(false);
-            servidor.setTiempoInicioOcio(getTiempo());
+            servidor[i].setEstado(false);
+            servidor[i].setTiempoInicioOcio(getTiempo());
         }
         // Agrega al contador el total de arribo del item
         Item.setTiempoTransito(this.getTiempo(),this.getItem().getTiempoArribo());

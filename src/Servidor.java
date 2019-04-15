@@ -3,13 +3,16 @@ public class Servidor {
 	private boolean estado;
 	private float tiempoOcioso;
 	private float tiempoInicioOcio;
-	
+	private float dineroRecaudado;
+
 	
 	public Servidor(){
+
 		item=null; //No hay items en el servidor
 		estado=false; //Desocupado
 		tiempoOcioso=0; //No hay tiempo Ocioso
 		tiempoInicioOcio=0; //Inicio de Ocio en 0
+		dineroRecaudado=0;
 	}
 	
 	
@@ -78,5 +81,13 @@ public class Servidor {
 	public void setTiempoInicioOcio(float tiempoInicioOcio) {
 
 		this.tiempoInicioOcio = tiempoInicioOcio;
+	}
+
+	public float getDineroRecaudado(){
+		return dineroRecaudado;
+	}
+
+	public void setDineroRecaudado(float dineroRecaudado){
+		this.dineroRecaudado = dineroRecaudado;
 	}
 }

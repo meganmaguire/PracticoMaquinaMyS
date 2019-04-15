@@ -48,5 +48,5 @@ public abstract class Evento {
 	/**
 	 *  Implementa la planiificación de eventos.
 	 */
-	public abstract void planificarEvento(Servidor servidor,Queue queue);
+	public abstract void planificarEvento(Servidor[] servidor,Queue[] queue);
 }

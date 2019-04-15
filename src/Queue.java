@@ -32,4 +32,9 @@ public class Queue {
 		else
 			return true;
 	}
+
+	public int getCantidadItems(){
+		return cantidadItems;
+	}
+
 }

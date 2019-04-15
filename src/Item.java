@@ -2,6 +2,7 @@ public class Item {
 	private int numero;
 	private float tiempoArribo;
 	private float tiempoDuracionServicio;
+	private int nroServidor;
 
 	private static float tiempoEsperaCola=0;
 	private static float tiempoTransito=0;
@@ -110,6 +111,14 @@ public class Item {
 	public void setTiempoDuracionServicio(float tiempoDuracionServicio) {
 
 		this.tiempoDuracionServicio = tiempoDuracionServicio;
+	}
+
+	public void setNroServidor(int nroServidor){
+		this.nroServidor = nroServidor;
+	}
+
+	public int getNroServidor(){
+		return nroServidor;
 	}
 
 	public String toString(){

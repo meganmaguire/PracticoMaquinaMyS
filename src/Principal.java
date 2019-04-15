@@ -11,18 +11,36 @@ public class Principal {
 
 		Fel fel = Fel.getFel(); // Creo la lista de eventos futuros
 
-		Queue queue = new Queue();  // Creo la cola de espera
+		Queue[] queue = new Queue[5]; // Colas de espera servidores
+		// Inicializa el arreglo
+		for(Queue q : queue){
+			q = new Queue();
+		}
 
-		Servidor servidor = new Servidor(); // Creo el servidor
+		Servidor[] servidor = new Servidor[5];  // Servidores
+		// Inicializa el arreglo
+		for (Servidor s: servidor) {
+			s = new Servidor();
+		}
 
 		// Inserta el evento de Fin de Simulación
 		actual = new EventoFinSimulacion(tiempoFinSimulacion);
 		fel.insertarFel(actual);
 		// Setea en 0 porque el Fin de Simulación contó un item que no existe
         Item.setCantidadItems(0);
-		// Inserta el primer arribo
-		actual = new EventoArribo(tiempoSimulacion);
+
+		// Inserta el primer arribo Liviano
+		actual = new EventoArriboLiviano(tiempoSimulacion);
 		fel.insertarFel(actual);
+
+		// Inserta el primer arribo Mediano
+		actual = new EventoArriboMediano(tiempoSimulacion);
+		fel.insertarFel(actual);
+
+		// Inserta el primer arribo Pesado
+		actual = new EventoArriboPesado(tiempoSimulacion);
+		fel.insertarFel(actual);
+
 
 		while (!finSimulacion){
 
@@ -38,6 +56,7 @@ public class Principal {
 		}
 
 		// Estadísticas de la simulación
+		/*
 		System.out.println("Tiempo ocioso: "+servidor.getTiempoOcioso()+"" +
 						   "\nTiempo en cola: "+ Item.getTiempoEsperaCola()+"" +
 						   "\nTiempo transito: "+Item.getTiempoTransito()+"" +
@@ -46,6 +65,8 @@ public class Principal {
 		System.out.println("\n\nTiempo medio de espera: "+Item.getTiempoEsperaCola()/Item.getCantidadItems()+" min."+
 				           "\nPorcentaje de tiempo ocioso de la pista: "+(servidor.getTiempoOcioso()/tiempoSimulacion)*100+"%" +
 						   "\nTiempo medio de tránsito: "+Item.getTiempoTransito()/Item.getCantidadItems()+" min.");
+
+		*/
 
 	}
 }
