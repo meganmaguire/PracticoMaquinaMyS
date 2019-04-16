@@ -4,6 +4,8 @@ public class EventoArriboMediano extends EventoArribo {
     public EventoArriboMediano(float tiempo){
 
         super(tiempo);
+        Item.setCantidadMedianos(Item.getCantidadMedianos()+1);
+
     }
 
     public void planificarEvento(Servidor[] servidores, Queue[] queues){
@@ -38,7 +40,7 @@ public class EventoArriboMediano extends EventoArribo {
         }
 
         this.getItem().setNroServidor(i);
-        this.planificarEvento(servidores,queues);
+        super.planificarEvento(servidores,queues);
 
 
     }

@@ -11,7 +11,7 @@ public class GeneradorTiempos {
         random=new Random(System.currentTimeMillis());
     }
        		
-    public static int getTiempoEntreArribos(float tiempoSimulacion, EventoArribo evento){
+    public static int getTiempoEntreArribos(float tiempoSimulacion, int i){
         double num = random.nextDouble();
         int diaMin = 1440;
         float tiempoActual = tiempoSimulacion % diaMin;
@@ -19,7 +19,7 @@ public class GeneradorTiempos {
         // Verifica si está en la frecuencia alta del día, de 7 a 9 y de 20 a 22
         if((tiempoActual >= 420 || tiempoActual <= 540) || (tiempoActual >= 1200 || tiempoActual <= 1320)) {
             // Avion Liviano
-            if(evento instanceof EventoArriboLiviano) {
+            if( i == 0) {
                 if (num <= 0.35)
                     return 40;
                 else
@@ -27,7 +27,7 @@ public class GeneradorTiempos {
             }
             else{
                 // Avion Mediano
-                if(evento instanceof EventoArriboMediano){
+                if(i == 1 || i == 2 || i == 3){
                     if(num <= 0.5)
                         return 10;
                     else{
@@ -48,7 +48,7 @@ public class GeneradorTiempos {
         }
         else{
             // Avion Liviano
-            if(evento instanceof EventoArriboLiviano){
+            if(i == 0){
                 if(num <= 0.25)
                     return 60;
                 else
@@ -56,7 +56,7 @@ public class GeneradorTiempos {
             }
             else{
                 // Avion Mediano
-                if(evento instanceof EventoArriboMediano){
+                if(i == 1 || i == 2 || i == 3){
                     if(num <= 0.3)
                         return 20;
                     else{

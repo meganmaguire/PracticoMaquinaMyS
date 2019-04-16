@@ -6,7 +6,7 @@ public class EventoSalida extends Evento {
         
     public void planificarEvento(Servidor[] servidor,Queue[] queue) {
 	            
-        Evento e;
+        Evento e = null;
         Item item;
         Fel fel = Fel.getFel();
         int i = this.getItem().getNroServidor();
@@ -15,9 +15,9 @@ public class EventoSalida extends Evento {
         if(queue[i].HayCola()){
 
             item = queue[i].suprimirCola();
-            Item.setTiempoEsperaCola(this.getTiempo(),item.getTiempoDuracionServicio(),item.getTiempoArribo());
+            Item.setTiempoEsperaCola(this.getTiempo(),item.getTiempoDuracionServicio(),item.getTiempoArribo(),i);
             // Genera el próximo evento de salida con el siguiente item de la cola
-            int salida = GeneradorTiempos.getTiempoDuracionServicio();
+            int salida = GeneradorTiempos.getTiempoDuracionServicio((EventoArribo)e);
             item.setTiempoDuracionServicio(salida);
             e = new EventoSalida(this.getTiempo() + salida, item );
             fel.insertarFel(e);

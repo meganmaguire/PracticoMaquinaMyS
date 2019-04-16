@@ -5,6 +5,7 @@ public class EventoArriboLiviano extends EventoArribo {
 
         super(tiempo);
         this.getItem().setNroServidor(0);
+        Item.setCantidadLivianos(Item.getCantidadLivianos()+1);
     }
 
 

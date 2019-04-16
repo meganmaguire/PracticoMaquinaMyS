@@ -84,10 +84,21 @@ public class Servidor {
 	}
 
 	public float getDineroRecaudado(){
+
 		return dineroRecaudado;
 	}
 
-	public void setDineroRecaudado(float dineroRecaudado){
-		this.dineroRecaudado = dineroRecaudado;
+	public void setDineroRecaudado(float dineroRecaudado, int i){
+
+		float monto = 0;
+		switch (i){
+			case 0: monto = 25000; break;
+			case 1: monto = 45000; break;
+			case 2: monto = 45000; break;
+			case 3: monto = 45000; break;
+			case 4: monto = 70000;
+		}
+
+		this.dineroRecaudado = dineroRecaudado + monto;
 	}
 }
