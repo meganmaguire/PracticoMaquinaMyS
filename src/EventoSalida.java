@@ -17,9 +17,9 @@ public class EventoSalida extends Evento {
             item = queue[i].suprimirCola();
             Item.setTiempoEsperaCola(this.getTiempo(),item.getTiempoDuracionServicio(),item.getTiempoArribo(),i);
             // Genera el próximo evento de salida con el siguiente item de la cola
-            int salida = GeneradorTiempos.getTiempoDuracionServicio((EventoArribo)e);
-            item.setTiempoDuracionServicio(salida);
-            e = new EventoSalida(this.getTiempo() + salida, item );
+            double salida = GeneradorTiempos.getTiempoDuracionServicio(i);
+            item.setTiempoDuracionServicio((float) salida);
+            e = new EventoSalida((float) (this.getTiempo() + salida), item );
             fel.insertarFel(e);
         }
         else{

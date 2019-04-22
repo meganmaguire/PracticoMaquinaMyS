@@ -77,33 +77,33 @@ public class GeneradorTiempos {
         }
     }
 	
-    public static int getTiempoDuracionServicio(EventoArribo evento){
+    public static double getTiempoDuracionServicio(int i){
         double num = random.nextDouble();
         // exponencial
-        int lambda = 30;
+        double lambda = 1.0 / 30.0;
         // uniforme
-        int indSup = 20, indInf = 10;
+        double indSup = 20, indInf = 10;
         // normal
         double z = 0,zp;
         double muY = 30, sigY = 120;
 
-        if(evento instanceof EventoArriboLiviano)
+        if(i == 0)
             // exponencial
-            return (int) ((-1/lambda)*Math.log((1-num)));
+            return  ((-1/lambda) *Math.log((1-num)));
         else{
-            if(evento instanceof EventoArriboMediano){
+            if(i == 1 || i == 2 || i == 3){
                 //uniforme
-                double x = (double)indInf + (double)(indSup-indInf)*num;
-                return (int)x;
+                double x = indInf + (indSup-indInf)*num;
+                return x;
             }
             else{
                 //normal
-                for(int i=0; i<12; i++){
+                for(int j=0; j<12; j++){
                     z+= random.nextDouble();
                 }
                 zp = (z - 6)/1;
-                double x = zp*sigY + muY;
-                return (int)x;
+                double x = zp * sigY + muY;
+                return x;
             }
 
         }

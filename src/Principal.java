@@ -24,7 +24,7 @@ public class Principal {
 		actual = new EventoFinSimulacion(tiempoFinSimulacion);
 		fel.insertarFel(actual);
 		// Setea en 0 porque el Fin de Simulación contó un item que no existe
-        Item.setCantidadItems(0);
+        Item.setCantidadItems(1);
 
 		// Inserta el primer arribo Liviano
 		actual = new EventoArriboLiviano(tiempoSimulacion);
