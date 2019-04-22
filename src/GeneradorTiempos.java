@@ -85,7 +85,7 @@ public class GeneradorTiempos {
         double indSup = 20, indInf = 10;
         // normal
         double z = 0,zp;
-        double muY = 30, sigY = 120;
+        double muY = 120, sigY = 30;
 
         if(i == 0)
             // exponencial
