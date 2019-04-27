@@ -17,68 +17,69 @@ public class GeneradorTiempos {
         float tiempoActual = tiempoSimulacion % diaMin;
 
         // Verifica si está en la frecuencia alta del día, de 7 a 9 y de 20 a 22
-        if((tiempoActual >= 420 || tiempoActual <= 540) || (tiempoActual >= 1200 || tiempoActual <= 1320)) {
-            // Avion Liviano
-            if( i == 0) {
-                if (num <= 0.35)
-                    return 40;
-                else
-                    return 50;
-            }
-            else{
+
+        if((tiempoActual >= 420 && tiempoActual <= 540) || (tiempoActual >= 1200 && tiempoActual <= 1320)) {
+
+            switch (i) {
+                // Avion Liviano
+                case 0:
+                    if (num <= 0.35)
+                        return 40;
+                    else
+                        return 50;
                 // Avion Mediano
-                if(i == 1 || i == 2 || i == 3){
-                    if(num <= 0.5)
+                case 1:
+                    if (num <= 0.5)
                         return 10;
-                    else{
-                        if(num <= 0.85)
+                    else {
+                        if (num <= 0.85)
                             return 20;
                         else
                             return 30;
                     }
-                }
                 // Avion Pesado
-                else{
-                    if(num <= 0.4)
+                case 2:
+                    if (num <= 0.4)
                         return 60;
                     else
                         return 90;
-                }
             }
         }
         else{
-            // Avion Liviano
-            if(i == 0){
-                if(num <= 0.25)
-                    return 60;
-                else
-                    return 70;
-            }
-            else{
+
+            switch (i) {
+                // Avion Liviano
+                case 0:
+                    if (num <= 0.25)
+                        return 60;
+                    else
+                        return 70;
                 // Avion Mediano
-                if(i == 1 || i == 2 || i == 3){
-                    if(num <= 0.3)
+                case 1:
+                    if (num <= 0.3)
                         return 20;
-                    else{
-                        if(num <= 0.7)
+                    else {
+                        if (num <= 0.7)
                             return 30;
                         else
                             return 40;
                     }
-                }
+
                 // Avion Pesado
-                else{
-                    if(num <= 0.5)
+                case 2:
+                    if (num <= 0.5)
                         return 120;
                     else
                         return 180;
-                }
             }
         }
+        // Por missing return statement
+        return 0;
     }
 	
     public static double getTiempoDuracionServicio(int i){
         double num = random.nextDouble();
+        double x;
         // exponencial
         double lambda = 1.0 / 30.0;
         // uniforme
@@ -87,25 +88,24 @@ public class GeneradorTiempos {
         double z = 0,zp;
         double muY = 120, sigY = 30;
 
-        if(i == 0)
+        switch(i) {
             // exponencial
-            return  ((-1/lambda) *Math.log((1-num)));
-        else{
-            if(i == 1 || i == 2 || i == 3){
-                //uniforme
-                double x = indInf + (indSup-indInf)*num;
+            case 0:
+                return ((-1 / lambda) * Math.log((1 - num)));
+            // uniforme
+            case 1:
+                x = indInf + (indSup - indInf) * num;
                 return x;
-            }
-            else{
-                //normal
-                for(int j=0; j<12; j++){
-                    z+= random.nextDouble();
+            // normal
+            case 2:
+                for (int j = 0; j < 12; j++) {
+                    z += random.nextDouble();
                 }
-                zp = (z - 6)/1;
-                double x = zp * sigY + muY;
+                zp = (z - 6) / 1;
+                x = zp * sigY + muY;
                 return x;
-            }
-
         }
+        // Por missing return statement
+        return 0;
     }
 }

@@ -11,31 +11,27 @@ public class Principal {
 
 		Fel fel = Fel.getFel(); // Creo la lista de eventos futuros
 
-		Queue[] queue = new Queue[5]; // Colas de espera servidores
-		Servidor[] servidor = new Servidor[5];  // Servidores
+		// Inicializa los servidores con la cantidad deseada para cada uno
 
-		// Inicializa el arreglo de Servidores y de Queues
-		for(int i=0; i<5; i++){
-			queue[i] = new Queue();
-			servidor[i] = new Servidor();
-		}
+		Servidores servidores = new Servidores(1,1,2);
+
 
 		// Inserta el evento de Fin de Simulación
-		actual = new EventoFinSimulacion(tiempoFinSimulacion);
+		actual = new EventoFinSimulacion(tiempoFinSimulacion, -1);
 		fel.insertarFel(actual);
 		// Setea en 0 porque el Fin de Simulación contó un item que no existe
-        Item.setCantidadItems(1);
+        Item.setCantidadItems(0);
 
 		// Inserta el primer arribo Liviano
-		actual = new EventoArriboLiviano(tiempoSimulacion);
+		actual = new EventoArribo(tiempoSimulacion,0);
 		fel.insertarFel(actual);
 
 		// Inserta el primer arribo Mediano
-		actual = new EventoArriboMediano(tiempoSimulacion);
+		actual = new EventoArribo(tiempoSimulacion,1);
 		fel.insertarFel(actual);
 
 		// Inserta el primer arribo Pesado
-		actual = new EventoArriboPesado(tiempoSimulacion);
+		actual = new EventoArribo(tiempoSimulacion,2);
 		fel.insertarFel(actual);
 
 
@@ -43,7 +39,7 @@ public class Principal {
 
 			// Toma el siguiente evento de la FEL
 			actual = fel.suprimirFel();
-			actual.planificarEvento(servidor,queue);
+			actual.planificarEvento(servidores);
 
 			// Si llega el Evento de Fin de Simulación termina
 			if(actual instanceof EventoFinSimulacion)
@@ -65,24 +61,28 @@ public class Principal {
 
 		*/
 
-		// Total de tiempo ocioso de las tres pistas de cabotaje y del monto recaudado
-		int tiempoMedioOcio = 0;
-		float montoRecaudado = 0;
-		for(int i = 1; i < servidor.length - 1; i++){
-			tiempoMedioOcio += servidor[i].getTiempoOcioso();
-			montoRecaudado += servidor[i].getDineroRecaudado();
-		}
+
+
+		// Cálculo de tiempo ocioso de las tres pistas de cabotaje y del monto recaudado
+		double tiempoOciosoLivianos = Estadisticas.calcularOcioPistas(servidores,0);
+		double tiempoOciosoMedianos = Estadisticas.calcularOcioPistas(servidores,1);
+		double tiempoOciosoPesados = Estadisticas.calcularOcioPistas(servidores,2);
+
+		int montoRecaudadoLivianos = Estadisticas.calcularMontoRecaudado(servidores,0);
+		int montoRecaudadoMedianos = Estadisticas.calcularMontoRecaudado(servidores,1);
+		int montoRecaudadoPesados = Estadisticas.calcularMontoRecaudado(servidores,2);
+
 
 		System.out.println("\n\nTiempo medio de tránsito de los aviones: " + Item.getTiempoTransito()/Item.getCantidadItems() + "min." +
 				           "\n\nTiempo medio de espera en cola de aviones privados: " + Item.getTiempoEsperaColaLivianos()/Item.getCantidadLivianos() + "min." +
 					       "\nTiempo medio de espera en cola de aviones de cabotaje: " + Item.getTiempoEsperaColaMedianos()/Item.getCantidadMedianos() + "min." +
 						   "\nTiempo medio de espera en cola de aviones internacionales: " + Item.getTiempoEsperaColaPesados()/Item.getCantidadPesados() + "min." +
-						   "\n\nTiempo medio de ocio de pista de aviones livianos: " + servidor[0].getTiempoOcioso()/tiempoSimulacion + "min." +
-						   "\nTiempo medio de ocio de pistas de aviones medianos: " + tiempoMedioOcio/tiempoSimulacion + "min." +
-						   "\nTiempo medio de ocio de pista de aviones pesados: " + servidor[4].getTiempoOcioso()/tiempoSimulacion + "min." +
-						   "\n\nTotal recaudado pista de aviones livianos: " + servidor[0].getDineroRecaudado() + " " +
-						   "\nTotal recaudado pistas de aviones medianos: " + montoRecaudado + "" +
-						   "\nTotal recaudado pistas de aviones pesados: " + servidor[4].getDineroRecaudado());
+						   "\n\nTiempo medio de ocio de pistas de aviones livianos: " + tiempoOciosoLivianos/tiempoSimulacion + "min." +
+						   "\nTiempo medio de ocio de pistas de aviones medianos: " + tiempoOciosoMedianos/tiempoSimulacion + "min." +
+						   "\nTiempo medio de ocio de pista de aviones pesados: " + tiempoOciosoPesados/tiempoSimulacion + "min." +
+						   "\n\nTotal recaudado pista de aviones livianos: " + montoRecaudadoLivianos + " " +
+						   "\nTotal recaudado pistas de aviones medianos: " + montoRecaudadoMedianos + "" +
+						   "\nTotal recaudado pistas de aviones pesados: " + montoRecaudadoPesados);
 
 
 	}

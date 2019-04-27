@@ -2,10 +2,10 @@ public class EventoFinSimulacion extends Evento {
 
 
 
-	public EventoFinSimulacion(float tiempo){
-		super(2,tiempo,new Item(tiempo));
+	public EventoFinSimulacion(float tiempo,int tipoArribo){
+		super(2,tiempo,new Item(tiempo,tipoArribo));
 	}
-	public void planificarEvento(Servidor[] servidor,Queue[] queue){
+	public void planificarEvento(Servidores servidores){
         // NADA
 	}
 }

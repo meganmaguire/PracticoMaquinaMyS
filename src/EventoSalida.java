@@ -4,17 +4,20 @@ public class EventoSalida extends Evento {
 	    super(1,tiempo,item);
    }
         
-    public void planificarEvento(Servidor[] servidor,Queue[] queue) {
+    public void planificarEvento(Servidores servidores) {
 	            
         Evento e = null;
         Item item;
         Fel fel = Fel.getFel();
-        int i = this.getItem().getNroServidor();
+        int i = this.getItem().getTipoArribo();
+
+        Servidor servidor = servidores.buscarServidorActual(this.getItem());
 
         // Si hay cola
-        if(queue[i].HayCola()){
+        if(servidor.getQueue().HayCola()){
 
-            item = queue[i].suprimirCola();
+            item = servidor.getQueue().suprimirCola();
+            servidor.setItem(item);
             Item.setTiempoEsperaCola(this.getTiempo(),item.getTiempoDuracionServicio(),item.getTiempoArribo(),i);
             // Genera el próximo evento de salida con el siguiente item de la cola
             double salida = GeneradorTiempos.getTiempoDuracionServicio(i);
@@ -24,10 +27,13 @@ public class EventoSalida extends Evento {
         }
         else{
             // Marca el servidor como desocupado
-            servidor[i].setEstado(false);
-            servidor[i].setTiempoInicioOcio(getTiempo());
+            servidor.setItem(null);
+            servidor.setEstado(false);
+            servidor.setTiempoInicioOcio(getTiempo());
         }
         // Agrega al contador el total de arribo del item
         Item.setTiempoTransito(this.getTiempo(),this.getItem().getTiempoArribo());
+        // Calcula el monto recaudado
+        servidor.setDineroRecaudado(servidor.getDineroRecaudado(),i);
     }
 }

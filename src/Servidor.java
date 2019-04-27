@@ -4,6 +4,7 @@ public class Servidor {
 	private float tiempoOcioso;
 	private float tiempoInicioOcio;
 	private float dineroRecaudado;
+	private Queue queue;
 
 	
 	public Servidor(){
@@ -13,6 +14,7 @@ public class Servidor {
 		tiempoOcioso=0; //No hay tiempo Ocioso
 		tiempoInicioOcio=0; //Inicio de Ocio en 0
 		dineroRecaudado=0;
+		queue = new Queue();
 	}
 	
 	
@@ -94,11 +96,17 @@ public class Servidor {
 		switch (i){
 			case 0: monto = 25000; break;
 			case 1: monto = 45000; break;
-			case 2: monto = 45000; break;
-			case 3: monto = 45000; break;
-			case 4: monto = 70000;
+			case 2: monto = 70000;
 		}
 
 		this.dineroRecaudado = dineroRecaudado + monto;
+	}
+
+	public Queue getQueue() {
+		return queue;
+	}
+
+	public void setQueue(Queue queue) {
+		this.queue = queue;
 	}
 }

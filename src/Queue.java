@@ -33,7 +33,8 @@ public class Queue {
 			return true;
 	}
 
-	public int getCantidadItems(){
+	public int getCantidadItems() {
+
 		return cantidadItems;
 	}
 

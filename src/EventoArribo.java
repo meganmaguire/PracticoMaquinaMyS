@@ -1,37 +1,42 @@
 public class EventoArribo extends Evento {
     
     
-    public EventoArribo(float tiempo){
+    public EventoArribo(float tiempo, int tipoArribo){
 
-		super(0,tiempo,new Item(tiempo));
+		super(0,tiempo,new Item(tiempo,tipoArribo));
     } 
         
-    public void planificarEvento(Servidor[] servidor,Queue[] queue){
+    public void planificarEvento(Servidores servidores){
 
          Evento e = null;
          Fel fel = Fel.getFel();
-         int i = this.getItem().getNroServidor();
+         Servidor servidor;
+         int i = this.getItem().getTipoArribo();
 
          //Si el servidor no está ocupado
-         if(!servidor[i].isEstado()){
+         if(!servidores.servidoresOcupados(this.getItem().getTipoArribo())){
+             servidor = servidores.buscarServidor(i);
+             servidor.setItem(this.getItem());
              // Genera su propio evento de salida
              double salida = GeneradorTiempos.getTiempoDuracionServicio(i);
              this.getItem().setTiempoDuracionServicio((float) salida);
              e = new EventoSalida((float) (this.getTiempo()+salida),this.getItem());
              fel.insertarFel(e);
              // Le suma el tiempo que estuvo ocioso hasta que llegó el arribo al total de ocio
-             servidor[i].setTiempoOcioso(servidor[i].getTiempoOcioso()+(getTiempo()-servidor[i].getTiempoInicioOcio()));
-		     servidor[i].setEstado(true);
-		     servidor[i].setDineroRecaudado(servidor[i].getDineroRecaudado(),i);
+             servidor = servidores.buscarServidorActual(this.getItem());
+             servidor.setTiempoOcioso(servidor.getTiempoOcioso()+(getTiempo()-servidor.getTiempoInicioOcio()));
+		     servidor.setEstado(true);
          }
 		 else{
-		     queue[i].insertarCola(this.getItem());
+		     // Si están ocupados lo inserta en la cola más corta que encuentra
+		     servidores.buscarCola(this.getItem().getTipoArribo()).getQueue().insertarCola(this.getItem());
          }
 
 		 // Genera el próximo evento de arribo
         int arribo = GeneradorTiempos.getTiempoEntreArribos(this.getTiempo(),i);
-        e = FactoryEventoArribo.getEventoArribo(i,this.getTiempo() + arribo);
+        e = new EventoArribo(this.getTiempo() + arribo,i);
         fel.insertarFel(e);
+
 
     }
   

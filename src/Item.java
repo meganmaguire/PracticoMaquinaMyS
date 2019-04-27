@@ -2,7 +2,7 @@ public class Item {
 	private int numero;
 	private float tiempoArribo;
 	private float tiempoDuracionServicio;
-	private int nroServidor;
+	private int tipoArribo;  // 0 - Liviano / 1 - Mediano / 2 - Pesado /  -1 - Inválido
 
 	private static float tiempoEsperaColaLivianos = 0;
 	private static float tiempoEsperaColaMedianos = 0;
@@ -14,12 +14,19 @@ public class Item {
 	private static int cantidadPesados = 0;
 
 
-	public Item(float tiempoArribo){
+	public Item(float tiempoArribo, int tipoArribo){
 
-		this.numero=cantidadItems;
 		cantidadItems++;
+		this.numero=cantidadItems;
 		this.tiempoArribo=tiempoArribo;
 		this.tiempoDuracionServicio=0;
+		this.tipoArribo = tipoArribo;
+
+		switch (tipoArribo){
+			case 0: cantidadLivianos++; break;
+			case 1: cantidadMedianos++; break;
+			case 2: cantidadPesados++;
+		}
 	}
         
         
@@ -57,10 +64,6 @@ public class Item {
 			case 1:
 				Item.tiempoEsperaColaMedianos = Item.tiempoEsperaColaMedianos + (tiempoActual-tiempoArribo-tiempoDuracionServicio); break;
 			case 2:
-				Item.tiempoEsperaColaMedianos = Item.tiempoEsperaColaMedianos + (tiempoActual-tiempoArribo-tiempoDuracionServicio); break;
-			case 3:
-				Item.tiempoEsperaColaMedianos = Item.tiempoEsperaColaMedianos + (tiempoActual-tiempoArribo-tiempoDuracionServicio); break;
-			case 4:
 				Item.tiempoEsperaColaPesados = Item.tiempoEsperaColaPesados + (tiempoActual-tiempoArribo-tiempoDuracionServicio);
 		}
 
@@ -92,26 +95,32 @@ public class Item {
 	}
 
 	public static int getCantidadLivianos() {
+
 		return cantidadLivianos;
 	}
 
 	public static void setCantidadLivianos(int cantidadLivianos) {
+
 		Item.cantidadLivianos = cantidadLivianos;
 	}
 
 	public static int getCantidadMedianos() {
+
 		return cantidadMedianos;
 	}
 
 	public static void setCantidadMedianos(int cantidadMedianos) {
+
 		Item.cantidadMedianos = cantidadMedianos;
 	}
 
 	public static int getCantidadPesados() {
+
 		return cantidadPesados;
 	}
 
 	public static void setCantidadPesados(int cantidadPesados) {
+
 		Item.cantidadPesados = cantidadPesados;
 	}
 
@@ -163,16 +172,31 @@ public class Item {
 		this.tiempoDuracionServicio = tiempoDuracionServicio;
 	}
 
-	public void setNroServidor(int nroServidor){
-		this.nroServidor = nroServidor;
+	public void setTipoArribo(int tipoArribo){
+		this.tipoArribo = tipoArribo;
 	}
 
-	public int getNroServidor(){
-		return nroServidor;
+	public int getTipoArribo(){
+		return tipoArribo;
 	}
 
 	public String toString(){
-		String retorno = "Item: "+this.getNumero()+" | Tiempo de arribo: "+this.getTiempoArribo()+" | Tiempo de servicio: "+this.getTiempoDuracionServicio();
+		String retorno = "Item: "+this.getNumero()+" | Tipo de Arribo: " +this.getTipoArribo()+" | Tiempo de arribo: "+this.getTiempoArribo()+" | Tiempo de servicio: "+this.getTiempoDuracionServicio();
 		return retorno;
+	}
+
+	public boolean equals(Item item){
+
+		// Si son iguales en cada campo
+
+		if (this.numero == item.getNumero() &&
+			this.tiempoArribo == item.getTiempoArribo() &&
+			this.tiempoDuracionServicio == item.getTiempoDuracionServicio() &&
+			this.tipoArribo == item.getTipoArribo()){
+
+			return true;
+		}
+		else
+			return false;
 	}
 }
