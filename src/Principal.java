@@ -9,11 +9,15 @@ public class Principal {
 		float tiempoSimulacion = 0;
 		float tiempoFinSimulacion = 10080;
 
+		int cantLiviano = 1;
+		int cantMediano = 3;
+		int cantPesado = 1;
+
 		Fel fel = Fel.getFel(); // Creo la lista de eventos futuros
 
 		// Inicializa los servidores con la cantidad deseada para cada uno
 
-		Servidores servidores = new Servidores(1,1,2);
+		Servidores servidores = new Servidores(cantLiviano,cantMediano,cantPesado);
 
 
 		// Inserta el evento de Fin de Simulación
@@ -48,21 +52,6 @@ public class Principal {
 				tiempoSimulacion = actual.getTiempo();
 		}
 
-		// Estadísticas de la simulación
-		/*
-		System.out.println("Tiempo ocioso: "+servidor.getTiempoOcioso()+"" +
-						   "\nTiempo en cola: "+ Item.getTiempoEsperaColaLivianos()+"" +
-						   "\nTiempo transito: "+Item.getTiempoTransito()+"" +
-						   "\nAviones: "+Item.getCantidadItems());
-
-		System.out.println("\n\nTiempo medio de espera: "+Item.getTiempoEsperaColaLivianos()/Item.getCantidadItems()+" min."+
-				           "\nPorcentaje de tiempo ocioso de la pista: "+(servidor.getTiempoOcioso()/tiempoSimulacion)*100+"%" +
-						   "\nTiempo medio de tránsito: "+Item.getTiempoTransito()/Item.getCantidadItems()+" min.");
-
-		*/
-
-
-
 		// Cálculo de tiempo ocioso de las tres pistas de cabotaje y del monto recaudado
 		double tiempoOciosoLivianos = Estadisticas.calcularOcioPistas(servidores,0);
 		double tiempoOciosoMedianos = Estadisticas.calcularOcioPistas(servidores,1);
@@ -77,9 +66,9 @@ public class Principal {
 				           "\n\nTiempo medio de espera en cola de aviones privados: " + Item.getTiempoEsperaColaLivianos()/Item.getCantidadLivianos() + "min." +
 					       "\nTiempo medio de espera en cola de aviones de cabotaje: " + Item.getTiempoEsperaColaMedianos()/Item.getCantidadMedianos() + "min." +
 						   "\nTiempo medio de espera en cola de aviones internacionales: " + Item.getTiempoEsperaColaPesados()/Item.getCantidadPesados() + "min." +
-						   "\n\nTiempo medio de ocio de pistas de aviones livianos: " + tiempoOciosoLivianos/tiempoSimulacion + "min." +
-						   "\nTiempo medio de ocio de pistas de aviones medianos: " + tiempoOciosoMedianos/tiempoSimulacion + "min." +
-						   "\nTiempo medio de ocio de pista de aviones pesados: " + tiempoOciosoPesados/tiempoSimulacion + "min." +
+						   "\n\nPorcentaje de ocio de pistas de aviones livianos: " + tiempoOciosoLivianos/(tiempoSimulacion*cantLiviano) * 100 + " %" +
+						   "\nPorcentaje de ocio de pistas de aviones medianos: " + tiempoOciosoMedianos/(tiempoSimulacion*cantMediano) * 100 + " %" +
+						   "\nPorcentaje de ocio de pista de aviones pesados: " + tiempoOciosoPesados/(tiempoSimulacion*cantPesado) * 100 + " %" +
 						   "\n\nTotal recaudado pista de aviones livianos: " + montoRecaudadoLivianos + " " +
 						   "\nTotal recaudado pistas de aviones medianos: " + montoRecaudadoMedianos + "" +
 						   "\nTotal recaudado pistas de aviones pesados: " + montoRecaudadoPesados);
