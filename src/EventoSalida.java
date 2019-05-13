@@ -32,7 +32,7 @@ public class EventoSalida extends Evento {
             servidor.setTiempoInicioOcio(getTiempo());
         }
         // Agrega al contador el total de arribo del item
-        Item.setTiempoTransito(this.getTiempo(),this.getItem().getTiempoArribo());
+        Item.setTiempoTransito(this.getTiempo(),this.getItem().getTiempoArribo(), i);
         // Calcula el monto recaudado
         servidor.setDineroRecaudado(servidor.getDineroRecaudado(),i);
     }

@@ -16,6 +16,10 @@ public class Fel {
 			fel = new Fel();
 		return(fel);
 	}
+
+	public static void resetFel(){
+		fel = null;
+	}
 	
 	public void insertarFel(Evento e){
 

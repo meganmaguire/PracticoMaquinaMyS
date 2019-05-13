@@ -7,11 +7,16 @@ public class Item {
 	private static float tiempoEsperaColaLivianos = 0;
 	private static float tiempoEsperaColaMedianos = 0;
 	private static float tiempoEsperaColaPesados = 0;
-	private static float tiempoTransito=0;
-	private static int cantidadItems = 1;
+
+	private static float tiempoTransitoLivianos = 0;
+	private static float tiempoTransitoMedianos = 0;
+	private static float tiempoTransitoPesados = 0;
+
 	private static int cantidadLivianos = 0;
 	private static int cantidadMedianos = 0;
 	private static int cantidadPesados = 0;
+
+	private static int cantidadItems = 0;
 
 
 	public Item(float tiempoArribo, int tipoArribo){
@@ -28,7 +33,23 @@ public class Item {
 			case 2: cantidadPesados++;
 		}
 	}
-        
+
+	public static void resetItem(){
+		tiempoEsperaColaLivianos = 0;
+		tiempoEsperaColaMedianos = 0;
+		tiempoEsperaColaPesados = 0;
+
+		tiempoTransitoLivianos = 0;
+		tiempoTransitoMedianos = 0;
+		tiempoTransitoPesados = 0;
+
+		cantidadLivianos = 0;
+		cantidadMedianos = 0;
+		cantidadPesados = 0;
+
+		cantidadItems = 0;
+
+	}
         
 	/**
 	 * @return Returns the cantidadItems.
@@ -72,16 +93,20 @@ public class Item {
         /**
 	 * @return Returns the tiempoTransito.
 	 */
-	public static float getTiempoTransito() {
 
-		return tiempoTransito;
-	}
 	
 	/**
 	 */
-	public static void setTiempoTransito(float tiempoActual, float tiempoArribo) {
+	public static void setTiempoTransito(float tiempoActual, float tiempoArribo, int tipoArribo) {
 
-		Item.tiempoTransito = Item.tiempoTransito + (tiempoActual-tiempoArribo);
+		switch (tipoArribo) {
+			case 0:
+				Item.setTiempoTransitoLivianos(Item.getTiempoTransitoLivianos() + (tiempoActual - tiempoArribo)); break;
+			case 1:
+				Item.setTiempoTransitoMedianos(Item.getTiempoTransitoMedianos() + (tiempoActual - tiempoArribo)); break;
+			case 2:
+				Item.setTiempoTransitoPesados(Item.getTiempoTransitoPesados() + (tiempoActual - tiempoArribo));
+		}
 	}
 
 	public static float getTiempoEsperaColaMedianos() {
@@ -122,6 +147,30 @@ public class Item {
 	public static void setCantidadPesados(int cantidadPesados) {
 
 		Item.cantidadPesados = cantidadPesados;
+	}
+
+	public static float getTiempoTransitoLivianos() {
+		return tiempoTransitoLivianos;
+	}
+
+	public static void setTiempoTransitoLivianos(float tiempoTransitoLivianos) {
+		Item.tiempoTransitoLivianos = tiempoTransitoLivianos;
+	}
+
+	public static float getTiempoTransitoMedianos() {
+		return tiempoTransitoMedianos;
+	}
+
+	public static void setTiempoTransitoMedianos(float tiempoTransitoMedianos) {
+		Item.tiempoTransitoMedianos = tiempoTransitoMedianos;
+	}
+
+	public static float getTiempoTransitoPesados() {
+		return tiempoTransitoPesados;
+	}
+
+	public static void setTiempoTransitoPesados(float tiempoTransitoPesados) {
+		Item.tiempoTransitoPesados = tiempoTransitoPesados;
 	}
 
 	/**
@@ -198,5 +247,14 @@ public class Item {
 		}
 		else
 			return false;
+	}
+
+	public static String type(int i){
+		switch (i){
+			case 0 : return "privados";
+			case 1 : return "de cabotaje";
+			case 2 : return "internacionales";
+		}
+		return "";
 	}
 }
